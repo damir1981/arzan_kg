@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Arzan.kg — Платформа скидок и купонов (Groupon Кыргызстан)
 
-## Getting Started
+> **Сервис коллективных скидок и электронных купонов в Кыргызстане со скидками до 90%.**
 
-First, run the development server:
+Полная архитектурная спецификация, схема данных и дорожная карта проекта задокументированы в файле **[ARZAN_SPEC.md](./ARZAN_SPEC.md)**.
+
+---
+
+## 🚀 Быстрый запуск (Quick Start)
 
 ```bash
+# 1. Установка зависимостей
+npm install
+
+# 2. Запуск локального сервера разработки
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# 3. Сборка для проверки
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Приложение будет доступно по адресу: **http://localhost:3000**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Технологический стек
 
-## Learn More
+- **Фреймворк**: Next.js 16 (App Router, Turbopack)
+- **UI**: React 19, Lucide React
+- **Стили**: Tailwind CSS v4, PostCSS
+- **Бэкенд & Аутентификация**: Firebase Auth (Google Sign-In + Email/Password), Firestore
+- **Язык**: TypeScript 5
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📱 Основные страницы приложения
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Маршрут | Описание |
+|---|---|
+| `/` | Главная витрина акций, баннер «Скидка дня», категории, фильтры |
+| `/product/[id]` | Страница акции: фотогалерея, заведение, условия купона, покупка |
+| `/vouchers` | **«Мои купоны»**: электронный кошелек с QR-кодами и промокодами |
+| `/favorites` | Избранные акции и скидки |
+| `/search` | Поиск по ключевым словам и сортировка по размеру скидки |
+| `/upload` | **«Партнерам»**: размещение акции заведением с авторасчетом скидки |
+| `/login` | Вход и регистрация (Google One-Click + Email) |
+| `/profile` | Личный кабинет пользователя |
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📖 Полная документация
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Подробное руководство по модернизации, типам данных и дальнейшему развитию доступно в **[ARZAN_SPEC.md](./ARZAN_SPEC.md)**.
