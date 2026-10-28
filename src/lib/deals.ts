@@ -383,6 +383,16 @@ export function saveLocalStoredDeal(deal: Deal): void {
 
 export async function getAllDeals(): Promise<Deal[]> {
     const local = getLocalStoredDeals();
+    if (!db) {
+        const combined = [...local, ...INITIAL_DEALS];
+        const map = new Map<string, Deal>();
+        for (const item of combined) {
+            if (!map.has(item.id)) {
+                map.set(item.id, item);
+            }
+        }
+        return Array.from(map.values());
+    }
     try {
         const dealsCol = collection(db, 'deals');
         const q = query(dealsCol, orderBy('createdAt', 'desc'), limit(50));
