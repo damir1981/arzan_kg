@@ -307,13 +307,13 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         login_password: 'Пароль',
         login_submit_register: 'Зарегистрироваться',
 
-        profile_guest_title: 'Личный кабинет Arzan.kg',
+        profile_guest_title: 'Личный кабинет Kupon.kg',
         profile_guest_desc: 'Войдите, чтобы активировать купоны на кассе заведения и управлять вашими скидками.',
         profile_guest_cta: 'Войти или зарегистрироваться',
         profile_verified: 'Аккаунт верифицирован',
         profile_for_business: 'Бизнесу',
         profile_submit_deal: 'Подать акцию',
-        profile_how_it_works: 'Как работает Arzan.kg',
+        profile_how_it_works: 'Как работает Kupon.kg',
         profile_step1_title: 'Выберите акцию',
         profile_step1_desc: 'Найдите любимое заведение со скидкой до 90%.',
         profile_step2_title: 'Оформите купон',
@@ -322,7 +322,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         profile_step3_desc: 'Покажите электронный билет на кассе при расчете.',
 
         upload_badge: 'Для заведений и партнеров',
-        upload_title: 'Разместить акцию на Arzan.kg',
+        upload_title: 'Разместить акцию на Kupon.kg',
         upload_subtitle: 'Привлеките сотни новых гостей в часы низкой загрузки',
         upload_success_title: 'Акция успешно опубликована!',
         upload_success_desc: 'Перенаправляем на страницу акции...',
@@ -339,7 +339,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         upload_add_photo: 'Добавить',
         upload_desc: 'Описание акции *',
         upload_publishing: 'Публикация...',
-        upload_submit: 'Опубликовать предложение на Arzan.kg',
+        upload_submit: 'Опубликовать предложение на Kupon.kg',
     },
     kg: {
         brand_tagline: 'Кыргызстандагы арзандатуулар жана купондор',
@@ -470,13 +470,13 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         login_password: 'Сырсөз',
         login_submit_register: 'Катталуу',
 
-        profile_guest_title: 'Arzan.kg жеке кабинети',
+        profile_guest_title: 'Kupon.kg жеке кабинети',
         profile_guest_desc: 'Мекеменин кассасында купондорду активдештирүү жана арзандатууларды башкаруу үчүн кириңиз.',
         profile_guest_cta: 'Кирүү же катталуу',
         profile_verified: 'Аккаунт тастыкталган',
         profile_for_business: 'Бизнеске',
         profile_submit_deal: 'Акция кошуу',
-        profile_how_it_works: 'Arzan.kg кантип иштейт',
+        profile_how_it_works: 'Kupon.kg кантип иштейт',
         profile_step1_title: 'Акцияны тандаңыз',
         profile_step1_desc: '90% чейин арзандатуу менен сүйүктүү жайыңызды табыңыз.',
         profile_step2_title: 'Купон алыңыз',
@@ -485,7 +485,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         profile_step3_desc: 'Эсептешүү учурунда кассадан электрондук билетти көрсөтүңүз.',
 
         upload_badge: 'Мекемелер жана өнөктөштөр үчүн',
-        upload_title: 'Arzan.kg сайтына акция жайгаштыруу',
+        upload_title: 'Kupon.kg сайтына акция жайгаштыруу',
         upload_subtitle: 'Төмөн жүктөм учурунда жүздөгөн жаңы конокторду тартыңыз',
         upload_success_title: 'Акция ийгиликтүү жарыяланды!',
         upload_success_desc: 'Акциянын баракчасына багыттоодо...',
@@ -502,7 +502,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         upload_add_photo: 'Кошуу',
         upload_desc: 'Акциянын сүрөттөмөсү *',
         upload_publishing: 'Жарыяланууда...',
-        upload_submit: 'Arzan.kg сайтына сунушту жарыялоо',
+        upload_submit: 'Kupon.kg сайтына сунушту жарыялоо',
     }
 };
 

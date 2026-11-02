@@ -63,7 +63,7 @@ export default function LoginPage() {
                         <div className="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
                             <Percent className="w-4 h-4 stroke-[2.5]" />
                         </div>
-                        <span className="text-2xl font-black text-white tracking-tight">Arzan.kg</span>
+                        <span className="text-2xl font-black text-white tracking-tight">Kupon.kg</span>
                     </Link>
                     <h1 className="text-xl font-bold text-white tracking-tight">
                         {isRegister ? t('login_create_account') : t('nav_personal_account')}

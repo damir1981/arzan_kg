@@ -21,7 +21,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const [language, setLanguageState] = useState<Language>('ru');
 
     useEffect(() => {
-        const saved = localStorage.getItem('arzan_lang') as Language;
+        const saved = localStorage.getItem('kupon_lang') as Language;
         if (saved === 'ru' || saved === 'kg') {
             setLanguageState(saved);
         }
@@ -29,7 +29,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
     const setLanguage = (lang: Language) => {
         setLanguageState(lang);
-        localStorage.setItem('arzan_lang', lang);
+        localStorage.setItem('kupon_lang', lang);
     };
 
     const t = (key: keyof Translations): string => {

@@ -39,7 +39,7 @@ export interface Voucher {
     merchantName: string;
     merchantAddress: string;
     merchantPhone: string;
-    code: string; // e.g. ARZ-8492-KG
+    code: string; // e.g. KPN-8492-KG
     qrCodeUrl?: string;
     discountPercent: number;
     discountPrice: number;

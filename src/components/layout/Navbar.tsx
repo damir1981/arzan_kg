@@ -61,7 +61,7 @@ export default function Navbar() {
                             <Percent className="w-4 h-4 stroke-[2.5]" />
                         </div>
                         <div className="flex items-baseline tracking-tight">
-                            <span className="text-lg md:text-xl font-bold text-white tracking-tight">Arzan</span>
+                            <span className="text-lg md:text-xl font-bold text-white tracking-tight">Kupon</span>
                             <span className="text-xs font-semibold text-emerald-400 ml-0.5">.kg</span>
                         </div>
                     </Link>
@@ -195,7 +195,7 @@ export default function Navbar() {
                                 <div className="absolute right-0 mt-2 w-52 apple-glass rounded-2xl shadow-2xl py-2 z-50 border border-white/[0.1]">
                                     <div className="px-4 py-2 border-b border-white/[0.06]">
                                         <p className="text-xs font-semibold text-white truncate">
-                                            {user.displayName || 'Пользователь Arzan'}
+                                            {user.displayName || 'Пользователь Kupon'}
                                         </p>
                                         <p className="text-[10px] text-zinc-500 truncate">{user.email}</p>
                                     </div>

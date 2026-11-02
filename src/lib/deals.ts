@@ -147,7 +147,7 @@ export const INITIAL_DEALS: Deal[] = [
         id: "4",
         title: "Релакс-программа в Club Olympus SPA: тайский массаж 60 мин + хаммам и бассейн со скидкой 60%",
         shortDescription: "Премиальный спа-отдых в отеле Hyatt Regency: массаж от мастера из Таиланда, бассейн и фитобар",
-        description: "Погрузитесь в атмосферу гармонии и спокойствия в пятизвездочном SPA-комплексе Club Olympus при отеле Hyatt Regency. Полный комплекс восстановления сил со скидкой 60% от Arzan.kg.",
+        description: "Погрузитесь в атмосферу гармонии и спокойствия в пятизвездочном SPA-комплексе Club Olympus при отеле Hyatt Regency. Полный комплекс восстановления сил со скидкой 60% от Kupon.kg.",
         category: "Красота и SPA",
         images: [
             `${BASE_PATH}/images/deal_spa.jpg`,
@@ -357,9 +357,9 @@ export const INITIAL_DEALS: Deal[] = [
     }
 ];
 
-const LOCAL_DEALS_KEY = 'arzan_local_deals';
-const FAVORITES_KEY = 'arzan_favorites';
-const VOUCHERS_KEY = 'arzan_vouchers';
+const LOCAL_DEALS_KEY = 'kupon_local_deals';
+const FAVORITES_KEY = 'kupon_favorites';
+const VOUCHERS_KEY = 'kupon_vouchers';
 
 export function getLocalStoredDeals(): Deal[] {
     if (typeof window === 'undefined') return [];
@@ -483,7 +483,7 @@ export function getUserVouchers(): Voucher[] {
             merchantName: 'Чайхана «Нават»',
             merchantAddress: 'Бишкек, ул. Киевская, 114',
             merchantPhone: '+996 (555) 500-111',
-            code: 'ARZ-8942-KG',
+            code: 'KPN-8942-KG',
             discountPercent: 50,
             discountPrice: 1000,
             purchasedAt: Date.now() - 3600000,
@@ -498,7 +498,7 @@ export function getUserVouchers(): Voucher[] {
 }
 
 export function buyVoucher(deal: Deal): Voucher {
-    const code = 'ARZ-' + Math.floor(1000 + Math.random() * 9000) + '-KG';
+    const code = 'KPN-' + Math.floor(1000 + Math.random() * 9000) + '-KG';
     const newVoucher: Voucher = {
         id: 'v_' + Date.now(),
         dealId: deal.id,

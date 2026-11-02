@@ -86,7 +86,7 @@ export default function PartnerUploadPage() {
                 badge: 'Новинка',
                 createdAt: Date.now(),
                 merchant: {
-                    name: merchantName || 'Партнер Arzan.kg',
+                    name: merchantName || 'Партнер Kupon.kg',
                     address: merchantAddress || 'Бишкек',
                     city: location,
                     phone: merchantPhone || '+996 555 000-000',
@@ -95,7 +95,7 @@ export default function PartnerUploadPage() {
                     reviewsCount: 1
                 },
                 features: [
-                    `Скидка ${calculatedDiscount}% по купону от Arzan.kg`,
+                    `Скидка ${calculatedDiscount}% по купону от Kupon.kg`,
                     'Высокое качество обслуживания',
                     'Удобное расположение'
                 ],

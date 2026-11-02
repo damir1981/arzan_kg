@@ -6,7 +6,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
-  title: "Arzan.kg | Скидки, акции и купоны в Кыргызстане до 90%",
+  title: "Kupon.kg | Скидки, акции и купоны в Кыргызстане до 90%",
   description: "Лучшие скидки Бишкека и Кыргызстана: рестораны, SPA, аквапарки, кино, отели на Иссык-Куле и развлечения со скидкой до 90%.",
 };
 

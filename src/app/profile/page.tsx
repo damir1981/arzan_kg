@@ -75,7 +75,7 @@ export default function ProfilePage() {
 
                         <div>
                             <h1 className="text-2xl font-black text-white tracking-tight">
-                                {user.displayName || 'Arzan.kg'}
+                                {user.displayName || 'Kupon.kg'}
                             </h1>
                             <p className="text-xs text-zinc-400 flex items-center justify-center sm:justify-start gap-1.5 mt-1">
                                 <Mail className="w-3.5 h-3.5 text-zinc-500" />

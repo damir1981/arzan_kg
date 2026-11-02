@@ -13,7 +13,7 @@ import {
 } from 'firebase/auth';
 import { auth, isFirebaseConfigured } from '@/lib/firebase';
 
-const DEMO_USER_KEY = 'arzan_demo_user';
+const DEMO_USER_KEY = 'kupon_demo_user';
 
 interface AuthContextType {
     user: User | null;
@@ -95,7 +95,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             const provider = new GoogleAuthProvider();
             await signInWithPopup(auth, provider);
         } else {
-            saveDemoSession('guest@arzan.kg', 'Гость Arzan.kg');
+            saveDemoSession('guest@kupon.kg', 'Гость Kupon.kg');
         }
     };
 
