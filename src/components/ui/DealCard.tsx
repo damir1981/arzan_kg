@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Deal } from '@/types';
-import { Heart, Star, MapPin, Flame } from 'lucide-react';
+import { Heart, Star, MapPin, Flame, ShieldCheck } from 'lucide-react';
 import { isDealFavorite, toggleFavorite, withBasePath } from '@/lib/deals';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -110,10 +110,18 @@ export default function DealCard({ deal }: DealCardProps) {
                             {deal.title}
                         </h3>
 
-                        {/* Location */}
-                        <div className="mt-2 flex items-center gap-1.5 text-xs text-zinc-500">
-                            <MapPin className="w-3 h-3 text-zinc-600 shrink-0" />
-                            <span className="truncate">{deal.merchant.address}</span>
+                        {/* Location & Confirmation Status */}
+                        <div className="mt-2 flex items-center justify-between gap-2 text-xs text-zinc-500">
+                            <div className="flex items-center gap-1.5 min-w-0">
+                                <MapPin className="w-3 h-3 text-zinc-600 shrink-0" />
+                                <span className="truncate">{deal.merchant.address}</span>
+                            </div>
+                            {deal.requiresConfirmation && (
+                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/20 shrink-0">
+                                    <ShieldCheck className="w-2.5 h-2.5" />
+                                    {t('deal_requires_confirmation_badge')}
+                                </span>
+                            )}
                         </div>
                     </div>
 

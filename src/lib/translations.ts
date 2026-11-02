@@ -175,6 +175,46 @@ export interface Translations {
     upload_desc: string;
     upload_publishing: string;
     upload_submit: string;
+
+    // Business Confirmation & Spot Control
+    upload_confirm_toggle_title: string;
+    upload_confirm_toggle_desc: string;
+    upload_confirm_enabled_badge: string;
+    upload_confirm_instant_badge: string;
+    deal_requires_confirmation_badge: string;
+    deal_instant_coupon_badge: string;
+    deal_request_coupon_action: string;
+    deal_customer_name_label: string;
+    deal_customer_phone_label: string;
+    modal_pending_badge: string;
+    modal_pending_hint: string;
+    modal_pending_status: string;
+    voucher_status_pending: string;
+    voucher_status_declined: string;
+    voucher_qr_locked: string;
+    voucher_qr_locked_hint: string;
+    voucher_declined_title: string;
+    voucher_declined_reason_prefix: string;
+    nav_merchant_requests: string;
+    nav_notifications: string;
+    merchant_panel_badge: string;
+    merchant_panel_title: string;
+    merchant_panel_subtitle: string;
+    merchant_tab_pending: string;
+    merchant_tab_processed: string;
+    merchant_empty_pending: string;
+    merchant_approve_btn: string;
+    merchant_decline_btn: string;
+    merchant_decline_placeholder: string;
+    merchant_decline_preset_no_spots: string;
+    merchant_decline_preset_tomorrow: string;
+    merchant_confirm_decline_btn: string;
+    merchant_cancel_btn: string;
+    notif_approved_title: string;
+    notif_approved_desc: string;
+    notif_declined_title: string;
+    notif_dismiss_btn: string;
+    notif_view_qr_btn: string;
 }
 
 export const TRANSLATIONS: Record<Language, Translations> = {
@@ -340,6 +380,45 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         upload_desc: 'Описание акции *',
         upload_publishing: 'Публикация...',
         upload_submit: 'Опубликовать предложение на Kupon.kg',
+
+        upload_confirm_toggle_title: 'Подтверждение купона заведением (контроль мест)',
+        upload_confirm_toggle_desc: 'Если включено, клиент сначала отправляет запрос на купон, а QR-код выдается только после вашего подтверждения наличия свободных мест.',
+        upload_confirm_enabled_badge: 'По подтверждению',
+        upload_confirm_instant_badge: 'Мгновенный QR',
+        deal_requires_confirmation_badge: 'По подтверждению мест',
+        deal_instant_coupon_badge: 'Мгновенный купон',
+        deal_request_coupon_action: 'Запросить купон за',
+        deal_customer_name_label: 'Ваше имя для брони',
+        deal_customer_phone_label: 'Ваш телефон для связи',
+        modal_pending_badge: 'Запрос отправлен заведению!',
+        modal_pending_hint: 'Заведение проверит наличие свободных мест и отправит подтверждение. Как только запрос будет одобрен, в разделе «Мои купоны» появится ваш QR-код.',
+        modal_pending_status: 'Ожидает подтверждения бизнеса',
+        voucher_status_pending: 'Ожидает подтверждения мест',
+        voucher_status_declined: 'Отклонено заведением',
+        voucher_qr_locked: 'QR-код появится после подтверждения',
+        voucher_qr_locked_hint: 'Заведение проверяет наличие мест. Вы получите уведомление сразу после ответа.',
+        voucher_declined_title: 'Нет свободных мест / Отклонено',
+        voucher_declined_reason_prefix: 'Сообщение от заведения',
+        nav_merchant_requests: 'Запросы клиентов',
+        nav_notifications: 'Уведомления',
+        merchant_panel_badge: 'Кабинет бизнеса • Контроль мест',
+        merchant_panel_title: 'Запросы на купоны',
+        merchant_panel_subtitle: 'Подтверждайте запросы клиентов при наличии свободных мест или отправляйте сообщение об отсутствии мест',
+        merchant_tab_pending: 'Ожидают ответа',
+        merchant_tab_processed: 'История решений',
+        merchant_empty_pending: 'Новых запросов на подтверждение пока нет',
+        merchant_approve_btn: 'Подтвердить (Выдать QR)',
+        merchant_decline_btn: 'Отклонить (Нет мест)',
+        merchant_decline_placeholder: 'Укажите причину отказа или предложите другое время...',
+        merchant_decline_preset_no_spots: 'К сожалению, на сегодня свободных мест нет',
+        merchant_decline_preset_tomorrow: 'На сегодня мест нет, ждем вас завтра!',
+        merchant_confirm_decline_btn: 'Отправить отказ клиенту',
+        merchant_cancel_btn: 'Отмена',
+        notif_approved_title: 'Бизнес подтвердил ваш купон!',
+        notif_approved_desc: 'Свободные места подтверждены. Ваш QR-код активирован и готов к использованию.',
+        notif_declined_title: 'Запрос на купон отклонен заведением',
+        notif_dismiss_btn: 'Понятно',
+        notif_view_qr_btn: 'Открыть QR-код',
     },
     kg: {
         brand_tagline: 'Кыргызстандагы арзандатуулар жана купондор',
@@ -503,6 +582,45 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         upload_desc: 'Акциянын сүрөттөмөсү *',
         upload_publishing: 'Жарыяланууда...',
         upload_submit: 'Kupon.kg сайтына сунушту жарыялоо',
+
+        upload_confirm_toggle_title: 'Купонду мекеме тарабынан тастыктоо (орундарды текшерүү)',
+        upload_confirm_toggle_desc: 'Эгер күйгүзүлсө, кардар алгач суроо-талап жөнөтөт, ал эми QR-код сиз бош орундарды тастыктагандан кийин гана берилет.',
+        upload_confirm_enabled_badge: 'Тастыктоо менен',
+        upload_confirm_instant_badge: 'Дароо QR',
+        deal_requires_confirmation_badge: 'Орундарды тастыктоо менен',
+        deal_instant_coupon_badge: 'Дароо купон',
+        deal_request_coupon_action: 'Купон суроо:',
+        deal_customer_name_label: 'Бронь үчүн атыңыз',
+        deal_customer_phone_label: 'Байланыш телефонуңуз',
+        modal_pending_badge: 'Суроо-талап мекемеге жөнөтүлдү!',
+        modal_pending_hint: 'Мекеме бош орундарды текшерип, тастыктоо жөнөтөт. Суроо-талап кабыл алынгандан кийин «Менин купондорум» бөлүмүндө QR-кодуңуз пайда болот.',
+        modal_pending_status: 'Бизнестин тастыктоосун күтүүдө',
+        voucher_status_pending: 'Орундарды тастыктоо күтүлүүдө',
+        voucher_status_declined: 'Мекеме тарабынан четке кагылды',
+        voucher_qr_locked: 'QR-код тастыкталгандан кийин ачылат',
+        voucher_qr_locked_hint: 'Мекеме бош орундарды текшерип жатат. Жооп келгенде билдирүү аласыз.',
+        voucher_declined_title: 'Бош орун жок / Четке кагылды',
+        voucher_declined_reason_prefix: 'Мекеменин билдирүүсү',
+        nav_merchant_requests: 'Кардарлардын суроо-талаптары',
+        nav_notifications: 'Билдирүүлөр',
+        merchant_panel_badge: 'Бизнес кабинети • Орундарды көзөмөлдөө',
+        merchant_panel_title: 'Купонго суроо-талаптар',
+        merchant_panel_subtitle: 'Бош орундар болгондо кардарлардын суроо-талаптарын тастыктаңыз же орун жоктугу тууралуу билдирүү жөнөтүңүз',
+        merchant_tab_pending: 'Жооп күтүүдө',
+        merchant_tab_processed: 'Чечимдер тарыхы',
+        merchant_empty_pending: 'Тастыктоону күткөн жаңы суроо-талаптар жок',
+        merchant_approve_btn: 'Тастыктоо (QR берүү)',
+        merchant_decline_btn: 'Баш тартуу (Орун жок)',
+        merchant_decline_placeholder: 'Баш тартуу себебин жазыңыз же башка убакытты сунуштаңыз...',
+        merchant_decline_preset_no_spots: 'Тилекке каршы, бүгүнкүгө бош орундар жок',
+        merchant_decline_preset_tomorrow: 'Бүгүн бош орун калган жок, эртең күтөбүз!',
+        merchant_confirm_decline_btn: 'Кардарга баш тартуу жөнөтүү',
+        merchant_cancel_btn: 'Жокко чыгаруу',
+        notif_approved_title: 'Бизнес купонуңузду тастыктады!',
+        notif_approved_desc: 'Бош орундар тастыкталды. Сиздин QR-кодуңуз активдештирилди жана колдонууга даяр.',
+        notif_declined_title: 'Купонго суроо-талап четке кагылды',
+        notif_dismiss_btn: 'Түшүнүктүү',
+        notif_view_qr_btn: 'QR-кодду ачуу',
     }
 };
 

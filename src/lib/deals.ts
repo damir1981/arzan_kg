@@ -162,6 +162,7 @@ export const INITIAL_DEALS: Deal[] = [
         expiresAt: Date.now() + 4 * 24 * 60 * 60 * 1000,
         location: "Бишкек",
         badge: "Эксклюзив",
+        requiresConfirmation: true,
         createdAt: Date.now() - 300000000,
         merchant: {
             name: "Club Olympus SPA (Hyatt Regency)",
@@ -246,6 +247,7 @@ export const INITIAL_DEALS: Deal[] = [
         expiresAt: Date.now() + 10 * 24 * 60 * 60 * 1000,
         location: "Иссык-Куль",
         badge: "Эксклюзив",
+        requiresConfirmation: true,
         createdAt: Date.now() - 420000000,
         merchant: {
             name: "Пансионат «Лазурный берег»",
@@ -468,15 +470,15 @@ export function isDealFavorite(dealId: string): boolean {
     return getFavorites().includes(dealId);
 }
 
-// Vouchers (Купоны пользователя)
+// Vouchers (Купоны пользователя и запросы в заведения)
 export function getUserVouchers(): Voucher[] {
     if (typeof window === 'undefined') return [];
     try {
         const stored = localStorage.getItem(VOUCHERS_KEY);
         if (stored) return JSON.parse(stored);
         
-        // Initial sample voucher for demo
-        const demoVoucher: Voucher = {
+        // Initial sample vouchers for demo
+        const demoActiveVoucher: Voucher = {
             id: 'v_1',
             dealId: '1',
             dealTitle: 'Скидка 50% на всё восточное меню в чайхане «Нават»',
@@ -488,17 +490,42 @@ export function getUserVouchers(): Voucher[] {
             discountPrice: 1000,
             purchasedAt: Date.now() - 3600000,
             expiresAt: Date.now() + 5 * 24 * 60 * 60 * 1000,
-            status: 'active'
+            status: 'active',
+            customerName: 'Азамат К.',
+            customerPhone: '+996 (555) 123-456',
+            userNotified: true
         };
-        localStorage.setItem(VOUCHERS_KEY, JSON.stringify([demoVoucher]));
-        return [demoVoucher];
+        const demoPendingVoucher: Voucher = {
+            id: 'v_2',
+            dealId: '4',
+            dealTitle: 'Релакс-программа в Club Olympus SPA: тайский массаж 60 мин + хаммам и бассейн со скидкой 60%',
+            merchantName: 'Club Olympus SPA (Hyatt Regency)',
+            merchantAddress: 'Бишкек, ул. Юсупа Абдрахманова, 191',
+            merchantPhone: '+996 (312) 661-234',
+            code: 'PENDING',
+            discountPercent: 60,
+            discountPrice: 2200,
+            purchasedAt: Date.now() - 1800000,
+            expiresAt: Date.now() + 4 * 24 * 60 * 60 * 1000,
+            status: 'pending',
+            customerName: 'Айгуль М.',
+            customerPhone: '+996 (700) 888-777',
+            userNotified: true
+        };
+        const initialList = [demoPendingVoucher, demoActiveVoucher];
+        localStorage.setItem(VOUCHERS_KEY, JSON.stringify(initialList));
+        return initialList;
     } catch {
         return [];
     }
 }
 
-export function buyVoucher(deal: Deal): Voucher {
-    const code = 'KPN-' + Math.floor(1000 + Math.random() * 9000) + '-KG';
+export function buyVoucher(deal: Deal, customerInfo?: { name?: string; phone?: string }): Voucher {
+    const isPending = Boolean(deal.requiresConfirmation);
+    const code = isPending
+        ? 'PENDING'
+        : 'KPN-' + Math.floor(1000 + Math.random() * 9000) + '-KG';
+
     const newVoucher: Voucher = {
         id: 'v_' + Date.now(),
         dealId: deal.id,
@@ -511,7 +538,10 @@ export function buyVoucher(deal: Deal): Voucher {
         discountPrice: deal.discountPrice,
         purchasedAt: Date.now(),
         expiresAt: deal.expiresAt || (Date.now() + 7 * 24 * 60 * 60 * 1000),
-        status: 'active'
+        status: isPending ? 'pending' : 'active',
+        customerName: customerInfo?.name || 'Гость Kupon.kg',
+        customerPhone: customerInfo?.phone || '+996 (555) 000-000',
+        userNotified: true
     };
 
     if (typeof window !== 'undefined') {
@@ -521,6 +551,69 @@ export function buyVoucher(deal: Deal): Voucher {
     }
 
     return newVoucher;
+}
+
+export function approveVoucherRequest(voucherId: string): Voucher | null {
+    if (typeof window === 'undefined') return null;
+    const current = getUserVouchers();
+    let updatedItem: Voucher | null = null;
+
+    const updatedList = current.map((v) => {
+        if (v.id === voucherId) {
+            updatedItem = {
+                ...v,
+                status: 'active',
+                code: 'KPN-' + Math.floor(1000 + Math.random() * 9000) + '-KG',
+                respondedAt: Date.now(),
+                userNotified: false,
+                declineReason: undefined
+            };
+            return updatedItem;
+        }
+        return v;
+    });
+
+    if (updatedItem) {
+        localStorage.setItem(VOUCHERS_KEY, JSON.stringify(updatedList));
+        window.dispatchEvent(new Event('vouchers-updated'));
+    }
+    return updatedItem;
+}
+
+export function declineVoucherRequest(voucherId: string, reason: string): Voucher | null {
+    if (typeof window === 'undefined') return null;
+    const current = getUserVouchers();
+    let updatedItem: Voucher | null = null;
+
+    const updatedList = current.map((v) => {
+        if (v.id === voucherId) {
+            updatedItem = {
+                ...v,
+                status: 'declined',
+                declineReason: reason.trim() || 'К сожалению, на выбранное время свободных мест нет.',
+                respondedAt: Date.now(),
+                userNotified: false
+            };
+            return updatedItem;
+        }
+        return v;
+    });
+
+    if (updatedItem) {
+        localStorage.setItem(VOUCHERS_KEY, JSON.stringify(updatedList));
+        window.dispatchEvent(new Event('vouchers-updated'));
+    }
+    return updatedItem;
+}
+
+export function markVoucherNotified(voucherId: string): void {
+    if (typeof window === 'undefined') return;
+    const current = getUserVouchers();
+    const updatedList = current.map((v) =>
+        v.id === voucherId ? { ...v, userNotified: true } : v
+    );
+    localStorage.setItem(VOUCHERS_KEY, JSON.stringify(updatedList));
+    window.dispatchEvent(new Event('vouchers-updated'));
 }
 
 // Backward compatibility aliases

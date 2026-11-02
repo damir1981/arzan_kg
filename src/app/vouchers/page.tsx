@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Ticket, QrCode, MapPin, Phone, Calendar, ArrowRight, CheckCircle2, Copy, Check } from 'lucide-react';
+import { Ticket, QrCode, MapPin, Phone, Calendar, ArrowRight, CheckCircle2, Copy, Check, Clock, Lock, XCircle, MessageSquareWarning } from 'lucide-react';
 import { Voucher } from '@/types';
 import { getUserVouchers } from '@/lib/deals';
 import { useLanguage } from '@/context/LanguageContext';
@@ -82,24 +82,55 @@ export default function VouchersPage() {
                     {vouchers.map((voucher) => (
                         <div
                             key={voucher.id}
-                            className="apple-glass-card rounded-[32px] overflow-hidden flex flex-col md:flex-row transition-all duration-300 hover:border-white/20"
+                            className={`apple-glass-card rounded-[32px] overflow-hidden flex flex-col md:flex-row transition-all duration-300 ${
+                                voucher.status === 'pending'
+                                    ? 'border-amber-500/25 hover:border-amber-500/40'
+                                    : voucher.status === 'declined'
+                                    ? 'border-rose-500/25 hover:border-rose-500/40 opacity-90'
+                                    : 'hover:border-white/20'
+                            }`}
                         >
                             {/* Left: Pass Info */}
                             <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
                                 <div>
-                                    <div className="flex items-center gap-2 mb-3">
+                                    <div className="flex items-center gap-2 flex-wrap mb-3">
                                         <span className="apple-badge-discount px-3 py-1 rounded-full text-xs font-black text-emerald-300">
                                             {t('deal_discount_label')} {voucher.discountPercent}%
                                         </span>
-                                        <span className="flex items-center gap-1.5 text-xs font-medium text-emerald-400">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                                            {t('voucher_status_active')}
-                                        </span>
+
+                                        {voucher.status === 'pending' ? (
+                                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                                                <Clock className="w-3 h-3 animate-pulse" />
+                                                {t('voucher_status_pending')}
+                                            </span>
+                                        ) : voucher.status === 'declined' ? (
+                                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/15 text-rose-300 border border-rose-500/30">
+                                                <XCircle className="w-3 h-3" />
+                                                {t('voucher_status_declined')}
+                                            </span>
+                                        ) : (
+                                            <span className="flex items-center gap-1.5 text-xs font-medium text-emerald-400">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                                {t('voucher_status_active')}
+                                            </span>
+                                        )}
                                     </div>
 
                                     <h3 className="text-xl md:text-2xl font-bold text-white mb-2 tracking-tight">
                                         {voucher.dealTitle}
                                     </h3>
+
+                                    {voucher.status === 'declined' && voucher.declineReason && (
+                                        <div className="mt-3 p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/25 flex items-start gap-2.5">
+                                            <MessageSquareWarning className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                                            <div className="text-xs">
+                                                <span className="font-bold text-rose-300 block mb-0.5">
+                                                    {t('voucher_declined_reason_prefix')}:
+                                                </span>
+                                                <span className="text-rose-200/90">«{voucher.declineReason}»</span>
+                                            </div>
+                                        </div>
+                                    )}
 
                                     <div className="space-y-2 text-xs text-zinc-400 mt-5">
                                         <div className="flex items-center gap-2 font-medium text-zinc-200">
@@ -128,37 +159,66 @@ export default function VouchersPage() {
                                 </div>
                             </div>
 
-                            {/* Right: Apple Pass Ticket Stub with QR */}
+                            {/* Right: Apple Pass Ticket Stub with QR / Pending / Declined State */}
                             <div className="relative flex md:flex-col items-center justify-center bg-black/40 p-6 md:p-8 md:w-64 border-t md:border-t-0 md:border-l border-dashed border-white/[0.1]">
                                 {/* Cutout notches */}
                                 <div className="hidden md:block absolute -top-3 left-0 -translate-x-1/2 w-6 h-6 rounded-full bg-[#050507] border border-white/[0.08]" />
                                 <div className="hidden md:block absolute -bottom-3 left-0 -translate-x-1/2 w-6 h-6 rounded-full bg-[#050507] border border-white/[0.08]" />
 
-                                <div className="flex flex-col items-center text-center w-full">
-                                    {/* Minimalist White QR Box */}
-                                    <div className="w-28 h-28 bg-white p-2 rounded-2xl shadow-xl flex items-center justify-center mb-3">
-                                        <QrCode className="w-24 h-24 text-black" />
+                                {voucher.status === 'pending' ? (
+                                    <div className="flex flex-col items-center text-center w-full space-y-2.5">
+                                        <div className="w-20 h-20 rounded-2xl bg-amber-500/10 border border-dashed border-amber-500/30 flex items-center justify-center">
+                                            <Lock className="w-8 h-8 text-amber-400" />
+                                        </div>
+                                        <span className="text-xs font-bold text-amber-300">
+                                            {t('voucher_qr_locked')}
+                                        </span>
+                                        <span className="text-[11px] text-zinc-500 leading-relaxed">
+                                            {t('voucher_qr_locked_hint')}
+                                        </span>
                                     </div>
+                                ) : voucher.status === 'declined' ? (
+                                    <div className="flex flex-col items-center text-center w-full space-y-2.5">
+                                        <div className="w-20 h-20 rounded-2xl bg-rose-500/10 border border-dashed border-rose-500/30 flex items-center justify-center">
+                                            <XCircle className="w-8 h-8 text-rose-400" />
+                                        </div>
+                                        <span className="text-xs font-bold text-rose-300">
+                                            {t('voucher_declined_title')}
+                                        </span>
+                                        <Link
+                                            href="/"
+                                            className="mt-1 px-3 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-[11px] font-semibold text-zinc-300 transition"
+                                        >
+                                            {t('voucher_explore_cta')}
+                                        </Link>
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col items-center text-center w-full">
+                                        {/* Minimalist White QR Box */}
+                                        <div className="w-28 h-28 bg-white p-2 rounded-2xl shadow-xl flex items-center justify-center mb-3">
+                                            <QrCode className="w-24 h-24 text-black" />
+                                        </div>
 
-                                    <span className="text-[10px] text-zinc-500 uppercase tracking-widest font-semibold">
-                                        {t('voucher_code_label')}
-                                    </span>
-                                    <button
-                                        type="button"
-                                        onClick={() => copyCode(voucher.code)}
-                                        className="mt-1 px-3 py-1.5 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.1] rounded-xl font-mono text-sm font-bold text-white flex items-center gap-1.5 transition cursor-pointer"
-                                    >
-                                        <span>{voucher.code}</span>
-                                        {copiedCode === voucher.code ? (
-                                            <Check className="w-3.5 h-3.5 text-emerald-400" />
-                                        ) : (
-                                            <Copy className="w-3.5 h-3.5 text-zinc-400" />
-                                        )}
-                                    </button>
-                                    <span className="text-[10px] text-zinc-500 mt-2">
-                                        {t('voucher_cashier_hint')}
-                                    </span>
-                                </div>
+                                        <span className="text-[10px] text-zinc-500 uppercase tracking-widest font-semibold">
+                                            {t('voucher_code_label')}
+                                        </span>
+                                        <button
+                                            type="button"
+                                            onClick={() => copyCode(voucher.code)}
+                                            className="mt-1 px-3 py-1.5 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.1] rounded-xl font-mono text-sm font-bold text-white flex items-center gap-1.5 transition cursor-pointer"
+                                        >
+                                            <span>{voucher.code}</span>
+                                            {copiedCode === voucher.code ? (
+                                                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                                            ) : (
+                                                <Copy className="w-3.5 h-3.5 text-zinc-400" />
+                                            )}
+                                        </button>
+                                        <span className="text-[10px] text-zinc-500 mt-2">
+                                            {t('voucher_cashier_hint')}
+                                        </span>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}

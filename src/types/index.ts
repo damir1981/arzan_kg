@@ -28,6 +28,7 @@ export interface Deal {
     merchant: Merchant;
     features: string[]; // Особенности акции
     conditions: string[]; // Условия купона
+    requiresConfirmation?: boolean; // Требуется ли подтверждение наличия мест от бизнеса перед выдачей QR
     badge?: 'Хит' | 'Скидка дня' | '-70%' | '-50%' | 'Эксклюзив' | 'Новинка';
     createdAt: number;
 }
@@ -39,13 +40,18 @@ export interface Voucher {
     merchantName: string;
     merchantAddress: string;
     merchantPhone: string;
-    code: string; // e.g. KPN-8492-KG
+    code: string; // e.g. KPN-8492-KG (generated once active)
     qrCodeUrl?: string;
     discountPercent: number;
     discountPrice: number;
     purchasedAt: number;
     expiresAt: number;
-    status: 'active' | 'used' | 'expired';
+    status: 'pending' | 'active' | 'declined' | 'used' | 'expired';
+    customerName?: string;
+    customerPhone?: string;
+    declineReason?: string;
+    respondedAt?: number;
+    userNotified?: boolean;
 }
 
 export interface User {

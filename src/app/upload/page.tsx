@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Camera, X, Loader2, Sparkles, CheckCircle2, Building2 } from 'lucide-react';
+import Link from 'next/link';
+import { Camera, X, Loader2, Sparkles, CheckCircle2, Building2, ShieldCheck, Zap, Inbox } from 'lucide-react';
 import Image from 'next/image';
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
@@ -30,6 +31,7 @@ export default function PartnerUploadPage() {
     const [originalPrice, setOriginalPrice] = useState('');
     const [discountPrice, setDiscountPrice] = useState('');
     const [description, setDescription] = useState('');
+    const [requiresConfirmation, setRequiresConfirmation] = useState(false);
     const [images, setImages] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -85,6 +87,7 @@ export default function PartnerUploadPage() {
                 expiresAt: Date.now() + 14 * 24 * 60 * 60 * 1000,
                 badge: 'Новинка',
                 createdAt: Date.now(),
+                requiresConfirmation,
                 merchant: {
                     name: merchantName || 'Партнер Kupon.kg',
                     address: merchantAddress || 'Бишкек',
@@ -121,17 +124,26 @@ export default function PartnerUploadPage() {
     return (
         <div className="container max-w-2xl mx-auto py-12 px-4 pb-28 font-[family-name:var(--font-geist-sans)]">
             <div className="apple-glass-card rounded-[32px] p-6 md:p-10 shadow-2xl">
-                <div className="mb-8">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/[0.04] border border-white/[0.08] text-emerald-400 mb-3">
-                        <Sparkles className="w-3.5 h-3.5" />
-                        {t('upload_badge')}
-                    </span>
-                    <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
-                        {t('upload_title')}
-                    </h1>
-                    <p className="text-xs text-zinc-400 mt-1">
-                        {t('upload_subtitle')}
-                    </p>
+                <div className="mb-8 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                    <div>
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/[0.04] border border-white/[0.08] text-emerald-400 mb-3">
+                            <Sparkles className="w-3.5 h-3.5" />
+                            {t('upload_badge')}
+                        </span>
+                        <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
+                            {t('upload_title')}
+                        </h1>
+                        <p className="text-xs text-zinc-400 mt-1">
+                            {t('upload_subtitle')}
+                        </p>
+                    </div>
+                    <Link
+                        href="/merchant"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.1] text-xs font-semibold text-zinc-200 transition self-start shrink-0"
+                    >
+                        <Inbox className="w-4 h-4 text-emerald-400" />
+                        <span>{t('nav_merchant_requests')}</span>
+                    </Link>
                 </div>
 
                 {success ? (
@@ -318,6 +330,62 @@ export default function PartnerUploadPage() {
                                 onChange={(e) => setDescription(e.target.value)}
                                 className="w-full px-4 py-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] text-xs text-white placeholder-zinc-500 outline-none focus:border-white/20 resize-none"
                             />
+                        </div>
+
+                        {/* Coupon Confirmation Toggle */}
+                        <div
+                            onClick={() => setRequiresConfirmation(!requiresConfirmation)}
+                            className={`p-5 rounded-2xl border transition-all cursor-pointer select-none ${
+                                requiresConfirmation
+                                    ? 'bg-emerald-500/[0.08] border-emerald-500/30'
+                                    : 'bg-white/[0.03] border-white/[0.06] hover:border-white/[0.12]'
+                            }`}
+                        >
+                            <div className="flex items-start justify-between gap-4">
+                                <div className="space-y-1.5">
+                                    <div className="flex items-center gap-2 flex-wrap">
+                                        {requiresConfirmation ? (
+                                            <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                                        ) : (
+                                            <Zap className="w-4 h-4 text-amber-400 shrink-0" />
+                                        )}
+                                        <span className="text-xs font-bold text-white">
+                                            {t('upload_confirm_toggle_title')}
+                                        </span>
+                                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                            requiresConfirmation
+                                                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                                                : 'bg-white/[0.06] text-zinc-400 border border-white/[0.08]'
+                                        }`}>
+                                            {requiresConfirmation
+                                                ? t('upload_confirm_enabled_badge')
+                                                : t('upload_confirm_instant_badge')}
+                                        </span>
+                                    </div>
+                                    <p className="text-[11px] text-zinc-400 leading-relaxed">
+                                        {t('upload_confirm_toggle_desc')}
+                                    </p>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    role="switch"
+                                    aria-checked={requiresConfirmation}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setRequiresConfirmation(!requiresConfirmation);
+                                    }}
+                                    className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out ${
+                                        requiresConfirmation ? 'bg-emerald-500' : 'bg-zinc-700'
+                                    }`}
+                                >
+                                    <span
+                                        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${
+                                            requiresConfirmation ? 'translate-x-5' : 'translate-x-0'
+                                        }`}
+                                    />
+                                </button>
+                            </div>
                         </div>
 
                         <button

@@ -5,17 +5,20 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
-import { User, LogOut, Ticket, Heart, ShieldCheck, Mail, ArrowRight, Loader2, Sparkles, PlusCircle } from 'lucide-react';
+import { User, LogOut, Ticket, Heart, ShieldCheck, Mail, ArrowRight, Loader2, Sparkles, PlusCircle, Inbox } from 'lucide-react';
 import { getUserVouchers, getFavorites } from '@/lib/deals';
 
 export default function ProfilePage() {
     const { user, loading: authLoading, logOut } = useAuth();
     const { t } = useLanguage();
     const [voucherCount, setVoucherCount] = useState(0);
+    const [pendingCount, setPendingCount] = useState(0);
     const [favoriteCount, setFavoriteCount] = useState(0);
 
     useEffect(() => {
-        setVoucherCount(getUserVouchers().length);
+        const list = getUserVouchers();
+        setVoucherCount(list.length);
+        setPendingCount(list.filter((v) => v.status === 'pending').length);
         setFavoriteCount(getFavorites().length);
     }, []);
 
@@ -101,7 +104,7 @@ export default function ProfilePage() {
                 </div>
 
                 {/* Quick Navigation Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8 pt-6 border-t border-white/[0.06]">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-6 border-t border-white/[0.06]">
                     <Link
                         href="/vouchers"
                         className="p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] text-center transition group"
@@ -125,8 +128,19 @@ export default function ProfilePage() {
                     </Link>
 
                     <Link
+                        href="/merchant"
+                        className="p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] text-center transition group"
+                    >
+                        <Inbox className="w-5 h-5 text-amber-400 mx-auto mb-1 group-hover:scale-110 transition-transform" />
+                        <p className="text-2xl font-black text-white tracking-tight">
+                            {pendingCount}
+                        </p>
+                        <p className="text-xs font-semibold text-zinc-400">{t('nav_merchant_requests')}</p>
+                    </Link>
+
+                    <Link
                         href="/upload"
-                        className="col-span-2 md:col-span-1 p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] text-center transition group"
+                        className="p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] text-center transition group"
                     >
                         <PlusCircle className="w-5 h-5 text-zinc-400 mx-auto mb-1 group-hover:scale-110 transition-transform" />
                         <p className="text-sm font-bold text-white mt-1">
